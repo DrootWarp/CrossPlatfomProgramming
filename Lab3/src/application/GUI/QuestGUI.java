@@ -106,7 +106,7 @@ public class QuestGUI {
 	    		for(int i = 0, size = character.getQuestToKill().getQuantity(); i < size; i++){
 	    			
 	    			character.spawnBoar();
-					while(character.getBoar().getHealth() != 0 || character.getBoar().getHealth() < 0 ) {
+					while(character.getBoar().getHealth() > 0 ) {
 						
 						character.beatMonster(false);	
 	    				alert.setHeaderText("Нанесенный урон");
@@ -117,7 +117,7 @@ public class QuestGUI {
 					character.beatMonster(false);
 					
 	        		alert.setHeaderText("Завершающий текст");
-	        		alert.setContentText(character.getBoar().getQuest().getFinalText());
+	        		alert.setContentText(character.getBoar().getQuest().endQuest());
 	        		alert.showAndWait();
 	        		character.setLevel(character.getLevel() + character.getBoar().getLevel());
 	        		levelLabel.setText("Уровень: "  + character.getLevel());
@@ -138,7 +138,7 @@ public class QuestGUI {
 				for(int i = 0, size = character.getQuestToKill().getQuantity(); i < size; i++){
     			
     			character.spawnWerwolf();
-				while(character.getWerwolf().getHealth()>=0) {
+				while(character.getWerwolf().getHealth() > 0) {
 					
 					character.beatMonster(true);	
     				alert.setHeaderText("Нанесенный урон");
@@ -146,9 +146,10 @@ public class QuestGUI {
     			    alert.showAndWait();
     			    
 				}
-    			    			
+				character.beatMonster(true); 
+				
         		alert.setHeaderText("Завершающий текст");
-        		alert.setContentText(character.getWerwolf().getQuest().getFinalText());
+        		alert.setContentText(character.getWerwolf().getQuest().endQuest());
         		alert.showAndWait();
         		character.setLevel(character.getLevel() + character.getWerwolf().getLevel());
         		levelLabel.setText("Уровень: "  + character.getLevel());
@@ -173,11 +174,12 @@ public class QuestGUI {
         		alert.setContentText(character.TakeTheQuest(true));
         		alert.showAndWait();
         		
-        		character.Move();
-			
+        		character.getQuestToMove().checkCoordinates(character.getCoordinates().getDistance());
         		alert.setHeaderText("Завершающий текст");
-        		//alert.setContentText(character.getQuestToMove().checkCoordinates(character.getCoordinates().getDistance()));
+        		alert.setContentText(character.getQuestToMove().endQuest());
         		alert.showAndWait();
+        		
+        		character.Move();
         		
         		coordinatesLabel.setText("Координаты: " + '(' + String.valueOf(character.getCoordinates().getxCoordinate()) + ';' 
         				+ String.valueOf(character.getCoordinates().getyCoordinate()) + ')');

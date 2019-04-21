@@ -1,6 +1,6 @@
 package application.logic.entity;
 
-import application.logic.QuestToKill;
+import application.logic.adventureGames.QuestToKill;
 
 public abstract class Monster {
 	
@@ -11,9 +11,15 @@ public abstract class Monster {
 	
 	public void TakeDamage(int damageTaken) {
 		
-		health -= damageTaken; 
-		quest.setFinalText("Dealt " + String.valueOf(damageTaken) + ", left " + String.valueOf(health) + " health");
-		if(health <= 0 ) Die();
+		if(health <= 0 ) { 
+			health = 0;
+			Die();
+			return;
+			}
+		
+		health -= damageTaken;
+		if(health < 0) health = 0;
+		quest.setFinalText("Нанесено " + String.valueOf(damageTaken) + " урона" + ", осталось " + String.valueOf(health) + " здоровья");
 		
 	}
 	private void Die() {

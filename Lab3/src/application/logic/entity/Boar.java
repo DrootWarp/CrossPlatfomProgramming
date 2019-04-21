@@ -1,6 +1,6 @@
 package application.logic.entity;
 
-import application.logic.QuestToKill;
+import application.logic.adventureGames.QuestToKill;
 
 public class Boar extends Monster{
 

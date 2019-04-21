@@ -1,4 +1,4 @@
-package application.logic;
+package application.logic.adventureGames;
 
 import application.logic.arithmetic.Coordinates;
 
@@ -16,21 +16,19 @@ public class QuestToMove extends Quest{
 	
 	public void checkCoordinates(double currentDistance) {
 		
-		super.setFinalText("The " + String.valueOf(Place.getDistance() - currentDistance) + " distance was traveled for"
-		+ String.valueOf(Time));
-		
-		//return endQuest();
+		super.setFinalText(String.valueOf(String.format("%.2f",Math.abs((Place.getDistance() - currentDistance)))) + " метров было пройдено за "
+		+ String.valueOf(String.format("%.1f",Time)) + " минут");
 		
 	}
 	
 	public void generateInformationForQuestToMove()
 	{
 		
-		Place.setxCoordinate((int)((Math.random()*10)+1));
-		Place.setyCoordinate((int)((Math.random()*10)+1));
+		Place.setxCoordinate((int)((Math.random()*100)+1));
+		Place.setyCoordinate((int)((Math.random()*100)+1));
 		Time = (Math.random()*10)+1;
-		super.setIntroductoryText("Travel to " + '(' + String.valueOf(Place.getxCoordinate())
-		+ ';' + String.valueOf(Place.getyCoordinate()) + ')' + "for " + String.valueOf(Time));
+		super.setIntroductoryText("Пройдите в точку " + '(' + String.valueOf(Place.getxCoordinate())
+		+ ';' + String.valueOf(Place.getyCoordinate()) + ')' + " за " + String.valueOf(String.format("%.1f",Time))+ " минут");
 		
 	}
 	

@@ -1,7 +1,7 @@
 package application.logic.entity;
 
-import application.logic.QuestToKill;
-import application.logic.QuestToMove;
+import application.logic.adventureGames.QuestToKill;
+import application.logic.adventureGames.QuestToMove;
 import application.logic.arithmetic.Coordinates;
 
 public class Character {
@@ -28,7 +28,7 @@ public class Character {
 		
 		if(!flag) {
 				boar.TakeDamage(Level);
-			return;
+			    return;
 		}
 			werwolf.TakeDamage(Level);
 		

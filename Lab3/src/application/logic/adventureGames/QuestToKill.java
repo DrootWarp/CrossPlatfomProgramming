@@ -1,4 +1,4 @@
-package application.logic;
+package application.logic.adventureGames;
 
 public class QuestToKill extends Quest {
 	
@@ -15,15 +15,15 @@ public class QuestToKill extends Quest {
  	public void killTheMonster() {
  		
  		Quantity-=1;
- 		super.setFinalText("The " + monsterType + " was killed, left: " + String.valueOf(Quantity));
-		//endQuest();	
+ 		super.setFinalText(monsterType + " был убит, осталось: " + String.valueOf(Quantity));
+ 		
 	}
  	
  	public void generateInformationForQuestToKill() {
  		
  		monsterType = "Monster";
 		Quantity = (int)(Math.random()*10)+1;
-		super.setIntroductoryText("Kill the " + String.valueOf(Quantity) + ' ' + monsterType);
+		super.setIntroductoryText("Убейте " + String.valueOf(Quantity) + ' ' + monsterType);
  		
  	}
  	

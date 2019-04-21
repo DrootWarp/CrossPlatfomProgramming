@@ -1,4 +1,4 @@
-package application.logic;
+package application.logic.adventureGames;
 
 public class Quest {
 	
@@ -15,7 +15,7 @@ public class Quest {
 		return introductoryText;
 	}
 	public String endQuest() {
-		return finalText;
+		return reportAboutEndQuest();
 	}
 	public String getIntroductoryText() {
 		return introductoryText;
