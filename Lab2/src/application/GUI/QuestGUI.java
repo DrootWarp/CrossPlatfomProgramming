@@ -31,7 +31,7 @@ public class QuestGUI {
 		BorderPane mainPane = new BorderPane();
 		character = new Character();
 		alert = new Alert(Alert.AlertType.INFORMATION);
-		mainScene = new Scene(mainPane, 430, 110);
+		mainScene = new Scene(mainPane, 440, 110);
 		setUpGridPane();
 		buildCharacterLabels();
 		buildCreateCharacterButton();
@@ -95,15 +95,15 @@ public class QuestGUI {
         		alert.setContentText(character.TakeTheQuest(true));
         		alert.showAndWait();
         		
-        		character.Move();
-			
         		alert.setHeaderText("Завершающий текст");
         		alert.setContentText(character.getQuestToMove().checkCoordinates(character.getCoordinates().getDistance()));
         		alert.showAndWait();
         		
+        		character.Move();
+        		
         		coordinatesLabel.setText("Координаты: " + '(' + String.valueOf(character.getCoordinates().getxCoordinate()) + ';' 
         				+ String.valueOf(character.getCoordinates().getyCoordinate()) + ')');
-        		levelLabel.setText(String.valueOf(character.getLevel()));
+        		levelLabel.setText("Уровень " + String.valueOf(character.getLevel()));
         		
             }
     	});
