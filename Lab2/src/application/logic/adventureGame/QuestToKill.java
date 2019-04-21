@@ -15,7 +15,7 @@ public class QuestToKill extends Quest {
  	public String killTheMonster() {
  		
  		Quantity-=1;
- 		super.setFinalText("The " + monsterType + " was killed, left: " + String.valueOf(Quantity));
+ 		super.setFinalText(monsterType + " был убит, осталось: " + String.valueOf(Quantity));
  		return endQuest();
 		
 	}
@@ -24,7 +24,7 @@ public class QuestToKill extends Quest {
  		
  		monsterType = "Monster";
 		Quantity = (int)(Math.random()*10)+1;
-		super.setIntroductoryText("Kill the " + String.valueOf(Quantity) + ' ' + monsterType);
+		super.setIntroductoryText("Убейте " + String.valueOf(Quantity) + ' ' + monsterType);
  		
  	}
  	
