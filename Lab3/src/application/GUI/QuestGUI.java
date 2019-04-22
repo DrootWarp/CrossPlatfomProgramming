@@ -30,9 +30,8 @@ public class QuestGUI {
 	public QuestGUI() {
 		
 		BorderPane mainPane = new BorderPane();
-		character = new Character();
 		alert = new Alert(Alert.AlertType.INFORMATION);
-		mainScene = new Scene(mainPane, 430, 130);
+		mainScene = new Scene(mainPane, 440, 130);
 		setUpGridPane();
 		buildCharacterLabels();
 		buildCreateCharacterButton();
@@ -102,6 +101,8 @@ public class QuestGUI {
 		
 		killBoarButton.setOnAction(new EventHandler<ActionEvent>(){
 			public void handle(ActionEvent event) {
+				
+				try {
 	
 	    		for(int i = 0, size = character.getQuestToKill().getQuantity(); i < size; i++){
 	    			
@@ -115,17 +116,37 @@ public class QuestGUI {
 	    			    
 					}
 					character.beatMonster(false);
-					
+	    			
 	        		alert.setHeaderText("Завершающий текст");
 	        		alert.setContentText(character.getBoar().getQuest().endQuest());
 	        		alert.showAndWait();
+	        		
+	        		if(character.getLevel() >= 10 && character.getLevel() <= 100) throw new Exception();
+	        		
 	        		character.setLevel(character.getLevel() + character.getBoar().getLevel());
 	        		levelLabel.setText("Уровень: "  + character.getLevel());
+
 	    			
 	    		}
 				killBoarButton.setDisable(true);
 				questToKillButton.setDisable(false);
+				
 				}
+				catch(Exception ex) {
+						
+						character.setLevel(10);
+						levelLabel.setText("Уровень: "  + character.getLevel());
+	            		alert.setHeaderText("Вы достигли 10 уровня");
+	            		alert.setContentText("Убийство Boar больше не повышает уровень");
+	            		alert.showAndWait();
+	            		questToKillButton.setDisable(false);
+	            		questToMoveButton.setDisable(false);
+	            		killBoarButton.setDisable(true);
+	            		killWerwolfButton.setDisable(true);
+	            		return;
+				
+			}
+			}
 		
 		});
 	}
@@ -134,7 +155,8 @@ public class QuestGUI {
 		killWerwolfButton.setOnAction(new EventHandler<ActionEvent>(){
 			public void handle(ActionEvent event) {
 				
-				
+				try {
+	
 				for(int i = 0, size = character.getQuestToKill().getQuantity(); i < size; i++){
     			
     			character.spawnWerwolf();
@@ -147,10 +169,11 @@ public class QuestGUI {
     			    
 				}
 				character.beatMonster(true); 
-				
+					
         		alert.setHeaderText("Завершающий текст");
         		alert.setContentText(character.getWerwolf().getQuest().endQuest());
         		alert.showAndWait();
+        		if(character.getLevel() >= 100) throw new Exception();
         		character.setLevel(character.getLevel() + character.getWerwolf().getLevel());
         		levelLabel.setText("Уровень: "  + character.getLevel());
     			
@@ -158,8 +181,24 @@ public class QuestGUI {
 			killWerwolfButton.setDisable(true);
 			questToKillButton.setDisable(false);
 			questToMoveButton.setDisable(false);
+				}
+        	catch(Exception ex) {
+        		
+        		character.setLevel(100);
+        		levelLabel.setText("Уровень: "  + character.getLevel());
+        		alert.setHeaderText("Вы достигли максимального уровня");
+        		alert.setContentText("Поздраляю, вы можете создать нового персонажа");
+        		alert.showAndWait();
+        		questToKillButton.setDisable(true);
+        		questToMoveButton.setDisable(true);
+        		killBoarButton.setDisable(true);
+        		killWerwolfButton.setDisable(true);
+        		createCharacterButton.setDisable(false);
+        		return;
+        	}
+    		
+        }
 			
-			}
 		});
 	}
     private void addActionForQuestToMoveButton(){
@@ -168,7 +207,7 @@ public class QuestGUI {
     		
             public void handle(ActionEvent event) {	
 				
-            	
+            	try {
     	   		alert.setTitle(null);
         		alert.setHeaderText("Вступительный текст");
         		alert.setContentText(character.TakeTheQuest(true));
@@ -183,7 +222,25 @@ public class QuestGUI {
         		
         		coordinatesLabel.setText("Координаты: " + '(' + String.valueOf(character.getCoordinates().getxCoordinate()) + ';' 
         				+ String.valueOf(character.getCoordinates().getyCoordinate()) + ')');
+        		if(character.getLevel() >= 100) throw new Exception();
         		levelLabel.setText("Уровень: " + String.valueOf(character.getLevel()));
+        		
+            	}
+            	catch(Exception ex) {
+            		
+					character.setLevel(100);
+	        		levelLabel.setText("Уровень: "  + character.getLevel());
+            		alert.setHeaderText("Вы достигли максимального уровня");
+            		alert.setContentText("Поздраляю, вы можете создать нового персонажа");
+            		alert.showAndWait();
+            		questToKillButton.setDisable(true);
+            		questToMoveButton.setDisable(true);
+            		killBoarButton.setDisable(true);
+            		killWerwolfButton.setDisable(true);
+            		createCharacterButton.setDisable(false);
+            		return;
+   
+            	}
         		
             }
     	});
@@ -197,7 +254,7 @@ public class QuestGUI {
 			
 			character.TakeTheQuest(false);
 			
-			if(character.getLevel() <= 10) {
+			if(character.getLevel() < 10) {
 			
 				killBoarButton.setDisable(false);
 		
@@ -207,7 +264,7 @@ public class QuestGUI {
 				alert.showAndWait();
 			}
 			
-			if(character.getLevel() > 10) {
+			if(character.getLevel() >= 10) {
 			
 				killBoarButton.setDisable(true);
 				killWerwolfButton.setDisable(false);
@@ -221,6 +278,7 @@ public class QuestGUI {
 			
 			
 			
+			
 		});
     	
     }	
@@ -228,13 +286,14 @@ public class QuestGUI {
 		
 		createCharacterButton.setOnAction( event ->{
 			
+			character = new Character();
 			questToMoveButton.setDisable(false);
 			questToKillButton.setDisable(false);
 			
-			raceLabel.setText(raceLabel.getText() + character.getRace());
-			specializationLabel.setText(specializationLabel.getText() + character.getSpecialization());
-			levelLabel.setText(levelLabel.getText() + character.getLevel());
-			coordinatesLabel.setText(coordinatesLabel.getText() + '(' + character.getCoordinates().getxCoordinate()
+			raceLabel.setText("Раса: "+ character.getRace());
+			specializationLabel.setText("Класс: "+ character.getSpecialization());
+			levelLabel.setText("Уровень: " + character.getLevel());
+			coordinatesLabel.setText("Координаты: " + '(' + character.getCoordinates().getxCoordinate()
 					+ ';' + character.getCoordinates().getyCoordinate() + ')');
 			
 			
