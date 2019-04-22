@@ -25,7 +25,6 @@ public class Character {
 	public String TakeTheQuest(boolean flag) {
 		
 		if(!flag) {
-			
 			questToKill = new QuestToKill();
 			questToKill.generateInformationForQuestToKill();
 			return questToKill.activateQuest();
