@@ -26,12 +26,13 @@ public class mainThreadGUI {
 	private TextField planetDayTextField;
 	private TextField planetYearTextField;
 	private mainThread thread;
-	private ArrayList<mainThread> threadsList;
+	private ArrayList<Thread> threadsList;
 	private Alert alert;
 	
 	public mainThreadGUI() {
 		
 		BorderPane mainPane = new BorderPane();
+		threadsList = new ArrayList<>();
 		alert = new Alert(Alert.AlertType.INFORMATION);
 		mainScene = new Scene(mainPane, 440, 130);
 		setUpGridPane();
@@ -41,7 +42,6 @@ public class mainThreadGUI {
 		mainPane.setCenter(gridPane);
 		
 	}
-	
 	private void setUpGridPane() {
 		
 		gridPane = new GridPane();
@@ -83,7 +83,22 @@ public class mainThreadGUI {
 		createPlanetButton.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 				
+				thread = new mainThread();
+				Thread myThread = new Thread(thread);
+				try {
 				
+					thread.createPlanet(Integer.parseInt(planetDayTextField.getText()),
+							Integer.parseInt(planetYearTextField.getText()),planetNameTextField.getText());
+					
+				}
+				catch(NumberFormatException e) {
+					
+				}
+				
+				myThread.setDaemon(true);
+			
+				myThread.start();
+				threadsList.add(myThread);
 				
 			}
 		});
